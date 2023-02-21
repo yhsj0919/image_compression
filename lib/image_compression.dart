@@ -9,8 +9,7 @@ import 'src/configuration.dart';
 import 'src/image_file.dart';
 import 'src/png_compression.dart';
 
-export 'image_compression_html.dart'
-    if (dart.library.io) 'image_compression_io.dart';
+export 'image_compression_html.dart' if (dart.library.io) 'image_compression_io.dart';
 export 'src/configuration.dart';
 export 'src/image_file.dart';
 export 'src/png_compression.dart';
@@ -47,21 +46,18 @@ ImageFile compress(ImageFileConfiguration param) {
       height: image.height,
     );
   } else {
-    final animation = img.decodeAnimation(input.rawBytes);
+    final animation = img.decodeGif(input.rawBytes);
     if (animation != null) {
-      final output = img.encodeGifAnimation(
+      final output = img.encodeGif(
         animation,
         samplingFactor: config.animationGifSamplingFactor,
       );
-
-      if (output != null) {
-        return ImageFile(
-          filePath: '',
-          rawBytes: Uint8List.fromList(output),
-          width: animation.width,
-          height: animation.height,
-        );
-      }
+      return ImageFile(
+        filePath: '',
+        rawBytes: Uint8List.fromList(output),
+        width: animation.width,
+        height: animation.height,
+      );
     }
   }
 
